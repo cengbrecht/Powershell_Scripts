@@ -1,0 +1,10 @@
+Get-AppxPackage -AllUsers | ForEach-Object {
+    Write-Output "Processing package: $($_.Name)"
+    try {
+        Add-AppxPackage -DisableDevelopmentMode -Register "$($_.InstallLocation)\AppXManifest.xml"
+        Write-Output "Successfully registered: $($_.Name)"
+    } catch {
+        Write-Output "Failed to register: $($_.Name)"
+        Write-Output $_.Exception.Message
+    }
+}
